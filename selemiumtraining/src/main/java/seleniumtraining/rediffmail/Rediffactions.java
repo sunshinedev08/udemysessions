@@ -9,11 +9,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import seleniumtraining.base.Base;
+import seleniumtraining.utils.Utilities;
 
 public class Rediffactions extends Base {
 	public void signupToRediff(WebDriver d) throws IOException {
 		ArrayList<String>ids=new ArrayList<String>();
-		ids.add("");
+		ids=Utilities.readXlsxSheet("data", "ids", System.getProperty("user.dir")+"//src//main//java//seleniumtraning//properties");
 		d.get("https://mail.rediff.com");
 		d.findElement(By.linkText("Rediffmail")).click();
 		if(d.getTitle().equals("Rediffmail")&&d.getCurrentUrl().equals("https://mail.rediff.com/cgi-bin/login.cgi")) {
@@ -25,7 +26,7 @@ public class Rediffactions extends Base {
 //				}
 			}
 			do {
-				d.findElement(By.xpath("//input[contains(@name,'logind')]")).sendKeys("qaops");
+				d.findElement(By.xpath("//input[contains(@name,'logind')]")).sendKeys(ids.get(0));
 				d.findElement(By.xpath("//input[contains(@name,'btnchk')]")).click();
 			}while(d.findElement(By.xpath("div#check_availability")).getText().equals("Yippie! The ID you've chosen is available."));
 			
